@@ -1,0 +1,83 @@
+{
+  "name": "rbac-system",
+  "version": "1.0.0",
+  "description": "Sistema modular de RBAC (Role-Based Access Control) para JavaScript/TypeScript",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "yarn ts-node-dev --respawn --transpile-only src/server.ts",
+    "start": "node dist/server.js",
+    "test": "yarn jest",
+    "test:watch": "yarn jest --watch",
+    "test:coverage": "yarn jest --coverage",
+    "lint": "yarn eslint src/**/*.ts",
+    "lint:fix": "yarn eslint src/**/*.ts --fix",
+    "format": "yarn prettier --write src/**/*.ts",
+    "format:check": "yarn prettier --check src/**/*.ts",
+    "init-db": "yarn ts-node scripts/init-db.ts",
+    "migrate": "yarn knex migrate:latest",
+    "seed": "yarn knex seed:run",
+    "clean": "rm -rf dist coverage",
+    "prebuild": "yarn clean",
+    "postinstall": "yarn init-db",
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
+  },
+  "keywords": [
+    "rbac",
+    "authorization",
+    "permissions",
+    "roles",
+    "jwt",
+    "middleware",
+    "microservice"
+  ],
+  "author": "RBAC System",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "sqlite3": "^5.1.6",
+    "pg": "^8.11.3",
+    "mysql2": "^3.6.5",
+    "knex": "^3.0.1",
+    "joi": "^17.11.0",
+    "dotenv": "^16.3.1",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/cors": "^2.8.17",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/pg": "^8.10.9",
+    "@types/uuid": "^9.0.7",
+    "@types/node": "^20.10.5",
+    "typescript": "^5.3.3",
+    "ts-node-dev": "^2.0.0",
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.8",
+    "ts-jest": "^29.1.1",
+    "eslint": "^8.56.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "prettier": "^3.1.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
+}

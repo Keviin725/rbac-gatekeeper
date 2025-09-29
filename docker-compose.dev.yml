@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  rbac-system-dev:
+    build:
+      context: .
+      target: base
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - DB_TYPE=postgresql
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=rbac_system
+      - DB_USER=rbac_user
+      - DB_PASSWORD=rbac_password
+      - JWT_SECRET=dev-secret-key
+      - JWT_EXPIRES_IN=24h
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: yarn dev
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=rbac_system
+      - POSTGRES_USER=rbac_user
+      - POSTGRES_PASSWORD=rbac_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
